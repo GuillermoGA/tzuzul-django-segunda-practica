@@ -9,8 +9,8 @@ class Movie(models.Model):
     title = models.CharField(max_length=100, null=False, blank=False)
     synopsis = models.TextField()
     slug = models.SlugField(null=False, blank=False, unique=True)
-    image = models.ImageField(upload_to='movies/', null=False, blank=False)
-    release_date = models.DateTimeField(null=False, blank=False)
+    image = models.ImageField(upload_to='movies/', null=True)
+    release_date = models.DateField(null=False, blank=False)
 
     def __str__(self):
         return self.title
@@ -27,4 +27,4 @@ def set_slug(sender, instance, *args, **kwargs):  # callback pre save
         instance.slug = slug
 
 
-pre_save.connect(set_slug, sender=Product)
+pre_save.connect(set_slug, sender=Movie)
