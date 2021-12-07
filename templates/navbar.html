@@ -10,22 +10,37 @@
     <div id="navb" class="navbar-collapse collapse hide">
 
         <ul class="nav navbar-nav ms-auto">
-                <li class="navbar-item">
-                    <a onclick="logout()" class="nav-link">
-                        <span class="fas fa-sign-in-alt"></span>
-                        Logout</a>
-                </li>
+            <li class="navbar-item">
+                <a id="logout_link" href="#" onclick="logout()" class="nav-link">
+                    <span class="fas fa-sign-in-alt"></span>
+                    Logout</a>
+            </li>
 
-                <li class="navbar-item {% if request.path == login %}active{% endif %}">
-                    <a href="{{ login }}" class="nav-link">
-                        <span class="fas fa-user"></span>
-                        Login</a>
-                </li>
-                <li class="navbar-item {% if request.path == register %}active{% endif %}">
-                    <a href="{{ register }}" class="nav-link">
-                        <span class="fas fa-user-plus"></span>
-                        Register</a>
-                </li>
+            <li id="login_link" class="navbar-item {% if request.path == login %}active{% endif %}">
+                <a href="{{ login }}" class="nav-link">
+                    <span class="fas fa-user"></span>
+                    Login</a>
+            </li>
+
+            <li id="register_link" class="navbar-item {% if request.path == register %}active{% endif %}">
+                <a href="{{ register }}" class="nav-link">
+                    <span class="fas fa-user-plus"></span>
+                    Register</a>
+            </li>
         </ul>
     </div>
 </nav>
+
+<script>
+    if(user_is_logged_in()){
+        document.getElementById("logout_link").style.display = 'block';
+        document.getElementById("login_link").style.display = 'none';
+        document.getElementById("register_link").style.display = 'none';
+    }
+    else{
+        document.getElementById("logout_link").style.display = 'none';
+        document.getElementById("login_link").style.display = 'block';
+        document.getElementById("register_link").style.display = 'block';
+    }
+
+</script>
