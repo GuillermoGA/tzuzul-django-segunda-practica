@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="col">
+    <h2>Registro</h2>
+
+    <form id="register_form">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="confirm-password">Confirm password</label>
+            <input type="password" name="confirm-password" id="confirm-password" class="form-control">
+        </div>
+
+        <button type="button" class="btn btn-primary" onclick="onclick_register()">Register</button>
+    </form>
+
+    <script>
+        function onclick_register(){
+            var form_data = getFormData("register_form")
+
+            if (form_data["password"] != form_data["confirm-password"]){
+                alert("Password does not match")
+                return
+            }
+
+            fetch("/api/register/", {
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    "username": form_data["username"],
+                    "password": form_data["password"],
+                }),
+                method: "POST"
+            })
+            .then(response=>{
+                if(response.status == 201){
+                    login(form_data["username"], form_data["password"])
+                }
+                else{
+                    alert(`Error creating user.`)
+                }
+            })
+        };
+    </script>
+</div>
+{% endblock %}
