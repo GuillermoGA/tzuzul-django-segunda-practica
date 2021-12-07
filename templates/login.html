@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<script>
+    if(user_is_logged_in()){
+        location.replace("/")
+    }
+</script>
+
 <div class="col">
     <h2>Login</h2>
     <form id="login_form">
@@ -14,34 +20,14 @@
             <input type="password" name="password" id="password" class="form-control">
         </div>
 
-        <button type="button" class="btn btn-primary" onclick="login()">Login</button>
+        <button type="button" class="btn btn-primary" onclick="onclick_login()">Login</button>
     </form>
 
 
     <script>
-        function login(){
+        function onclick_login(){
             var form_data = getFormData("login_form")
-
-            fetch("{% url 'api_login' %}", {
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    "username": form_data["username"],
-                    "password": form_data["password"]
-                }),
-                method: "POST"
-            })
-            .then(response=>response.json())
-            .then(result=>{
-                if("token" in result){
-                    setCookie("token", result["token"])
-                    location.replace("{% url 'index' %}")
-                }
-                else{
-                    alert("Usuario o contraseña incorrectas")
-                }
-            })
+            login(form_data["username"], form_data["password"])
         };
     </script>
 </div>

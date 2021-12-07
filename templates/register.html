@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<script>
+    if(user_is_logged_in()){
+        location.replace("/")
+    }
+</script>
+
 <div class="col">
     <h2>Registro</h2>
 

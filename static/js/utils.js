@@ -9,6 +9,10 @@ function setCookie(cname, cvalue, exdays=1) {
   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
+function deleteCookie(cname) {
+  setCookie(cname, '', -1)
+}
+
 function getCookie(cname) {
   let name = cname + "=";
   let ca = document.cookie.split(';');
@@ -34,4 +38,43 @@ function checkCookie() {
       setCookie("username", user, 365);
     }
   }
+}
+
+function login(username, password){
+    console.log(`Username ${username}`)
+    console.log(`Password ${password}`)
+    fetch("/api/login/", {
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "username": username,
+            "password": password
+        }),
+        method: "POST"
+    })
+    .then(response=>response.json())
+    .then(result=>{
+        if("token" in result){
+            setCookie("token", result["token"])
+            location.replace("/")
+        }
+        else{
+            alert("User or password incorrect")
+        }
+    })
+}
+
+function user_is_logged_in(){
+    if(getCookie("token") != undefined && getCookie("token") != ''){
+        return true
+    }
+    else{
+        return false
+    }
+}
+
+function logout(){
+    deleteCookie("token")
+    location.replace("/")
 }
