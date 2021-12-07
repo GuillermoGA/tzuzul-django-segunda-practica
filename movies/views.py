@@ -24,6 +24,6 @@ class MovieModelViewSet(ModelViewSet):
 
         filters = Q()
         for filter in filters_list:
-            filters = filters.__and__(filter)
+            filters = filters & filter
 
         return Movie.objects.filter(filters)
