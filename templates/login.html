@@ -20,7 +20,7 @@
 
     <script>
         function login(){
-            var form_data = Array.from(document.querySelectorAll('#login_form input')).reduce((acc, input) => ({ ...acc, [input.id]: input.value}),{});
+            var form_data = getFormData("login_form")
 
             fetch("{% url 'api_login' %}", {
                 headers: {
@@ -33,7 +33,15 @@
                 method: "POST"
             })
             .then(response=>response.json())
-            .then(result=>console.log(result))
+            .then(result=>{
+                if("token" in result){
+                    setCookie("token", result["token"])
+                    location.replace("{% url 'index' %}")
+                }
+                else{
+                    alert("Usuario o contraseña incorrectas")
+                }
+            })
         };
     </script>
 </div>
