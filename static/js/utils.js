@@ -78,3 +78,62 @@ function logout(){
     deleteCookie("token")
     location.replace("/")
 }
+
+
+function get_movies(filters){
+    return fetch("/api/movies/", {
+        headers: {
+            "Content-Type": "application/json"
+        },
+        method: "GET"
+    })
+    .then(response=>response.json())
+    .then(result=>{
+        return result
+    })
+}
+
+function print_movie(movie){
+    var div1 = document.createElement("div")
+    div1.className ="card h-100"
+
+    var img = document.createElement("img")
+    img.src = movie.image
+    img.alt = "movie image"
+    img.height = 300
+    div1.appendChild(img)
+
+    var div2 = document.createElement("div")
+    div2.className = "card-body"
+    div1.appendChild(div2)
+
+    var h5 = document.createElement("h5")
+    h5.className = "card-title"
+    h5.innerText = movie.title
+    div1.appendChild(h5)
+
+    if(movie.category != null){
+        var p = document.createElement("p")
+        p.className = "card-text"
+        p.innerText = movie.category.title
+        div1.appendChild(p)
+    }
+
+    var a = document.createElement("a")
+    a.className = "btn btn-primary"
+    a.href = "#"
+    a.innerText = "Details"
+    div1.appendChild(a)
+
+    return div1
+}
+
+function print_movies(movies){
+    var parent_div = document.getElementById("list_movies_div")
+    movies.forEach(function(movie){
+        var div = document.createElement("div")
+        div.className = "col-3 mt-5"
+        div.appendChild(print_movie(movie))
+        parent_div.appendChild(div)
+    })
+}
