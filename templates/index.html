@@ -3,6 +3,15 @@
 {% block content %}
 <div class="col">
     <!-- Search by movie title-->
+    <form method="post" action="">
+        <div class="input-group">
+            <input id="search" type="text" name="title" class="form-control" placeholder="Search">
+            <div class="input-group-append">
+                <input onclick="filter_movies()" value="Search" class="btn btn-primary">
+            </div>
+        </div>
+    </form>
+
     <!-- TODO -->
     <!-- Search by movie categories -->
 
@@ -11,6 +20,18 @@
 </div>
 
 <script>
+    function filter_movies(category){
+        clear_movies()
+
+        filters = ""
+
+        var search = document.getElementById("search")
+        if(search.value != ""){
+            filters = `${search.name}=${search.value}`
+        }
+        get_movies(filters)
+        .then(result=>print_movies(result))
+    }
     get_movies().then(result=>print_movies(result))
 </script>
 {% endblock %}

@@ -81,7 +81,10 @@ function logout(){
 
 
 function get_movies(filters){
-    return fetch("/api/movies/", {
+    if(filters == null){
+        filters = ""
+    }
+    return fetch(`/api/movies/?${filters}`, {
         headers: {
             "Content-Type": "application/json"
         },
@@ -136,4 +139,12 @@ function print_movies(movies){
         div.appendChild(print_movie(movie))
         parent_div.appendChild(div)
     })
+}
+
+function clear_movies(){
+    const parent_div = document.getElementById("list_movies_div");
+    while (parent_div.firstChild) {
+        parent_div.removeChild(parent_div.lastChild);
+    }
+}
 }
