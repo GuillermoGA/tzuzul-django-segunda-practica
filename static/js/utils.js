@@ -147,4 +147,59 @@ function clear_movies(){
         parent_div.removeChild(parent_div.lastChild);
     }
 }
+
+function get_categories(){
+    return fetch("api/categories/", {
+        headers: {
+            "Content-Type": "application/json"
+        },
+        method: "GET"
+    })
+    .then(response=>response.json())
+    .then(result=>{
+        return result
+    })
+}
+
+function print_category(category){
+    var div1 = document.createElement("div")
+
+    var button = document.createElement("button")
+    button.className = "btn btn-primary"
+    button.name = "category"
+    button.value = category.title
+    button.innerText = category.title
+    button.setAttribute("onclick", "filter_movies(this)")
+    div1.appendChild(button)
+
+    return div1
+}
+
+function print_categories(categories){
+    var parent_div = document.getElementById("list_categories_div")
+    categories.forEach(function(category){
+        var div = document.createElement("div")
+        div.className = "col-1 mt-5"
+        div.appendChild(print_category(category))
+        parent_div.appendChild(div)
+    })
+
+    // add clear categories button
+    var div = document.createElement("div")
+    div.className = "col-1 mt-5"
+
+    var div1 = document.createElement("div")
+
+    var button = document.createElement("button")
+    button.className = "btn btn-primary"
+    button.name = "category"
+    button.value = ""
+    button.innerText = "All Categories"
+    button.setAttribute("onclick", "filter_movies(this)")
+    div1.appendChild(button)
+
+    div.appendChild(div1)
+
+    parent_div.appendChild(div)
+
 }

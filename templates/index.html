@@ -14,6 +14,7 @@
 
     <!-- TODO -->
     <!-- Search by movie categories -->
+    <div id="list_categories_div" class="row"></div>
 
     <!-- List Movies -->
     <div id="list_movies_div" class="row"></div>
@@ -29,9 +30,20 @@
         if(search.value != ""){
             filters = `${search.name}=${search.value}`
         }
+
+        if(filters != ""){
+            filters += "&"
+        }
+
+        if(category != null && category.value != ""){
+            filters += `${category.name}=${category.value}`
+        }
+
         get_movies(filters)
         .then(result=>print_movies(result))
     }
+
+    get_categories().then(result=>print_categories(result))
     get_movies().then(result=>print_movies(result))
 </script>
 {% endblock %}
