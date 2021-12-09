@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
+from categories import views as categories_views
 from reviews import views as reviews_views
 from movies import views as movies_views
 from users import views as users_views
@@ -25,6 +26,7 @@ urlpatterns = [
 
     # API
     path('api/', include((router.urls, 'api'))),
+    path('api/categories/', categories_views.CategoryListView.as_view()),
     path('api/login/', users_views.Login.as_view(), name="api_login"),
     path('api/logout/', users_views.Logout.as_view(), name="api_logout"),
     path('api/register/', users_views.CreateUserView.as_view(), name="api_register"),

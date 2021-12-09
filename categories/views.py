@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from rest_framework.generics import ListAPIView
 
-# Create your views here.
+from .models import Category
+from .serializers import CategoryModelSerializer
+
+
+class CategoryListView(ListAPIView):
+    serializer_class = CategoryModelSerializer
+    queryset = Category.objects.all()
