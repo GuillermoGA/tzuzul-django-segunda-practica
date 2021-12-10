@@ -143,8 +143,9 @@ function create_review(movie_id){
                 "movie": movie_id
         })
     })
-
-    clear_form("create_review_form")
-    clear_reviews()
-    print_movie_details(movie_id)
+    .then(response=>response.json())
+    .then(result=>{
+        clear_form("create_review_form")
+        print_reviews([result])
+    })
 }
