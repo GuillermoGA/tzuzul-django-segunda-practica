@@ -5,10 +5,10 @@ from django.urls import path, include
 from rest_framework import routers
 
 from categories import views as categories_views
-from reviews import views as reviews_views
 from movies import views as movies_views
+from reviews import views as reviews_views
 from users import views as users_views
-from . import views 
+from . import views
 
 router = routers.SimpleRouter()
 router.register(r'reviews', reviews_views.ReviewModelViewSet)

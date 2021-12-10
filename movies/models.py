@@ -1,8 +1,4 @@
-import uuid
-
 from django.db import models
-from django.utils.text import slugify
-from django.db.models.signals import pre_save
 
 from categories.models import Category
 
