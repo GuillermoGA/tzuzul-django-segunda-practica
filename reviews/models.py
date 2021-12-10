@@ -10,13 +10,12 @@ class Review(models.Model):
     comment = models.TextField()
     published_date = models.DateTimeField(auto_now_add=True)
     stars = models.PositiveIntegerField(null=False, validators=[
-            MaxValueValidator(5),
-            MinValueValidator(1)
-        ])
+        MaxValueValidator(5),
+        MinValueValidator(1)
+    ])
 
     movie = models.ForeignKey(Movie, null=False, blank=False, on_delete=models.CASCADE, related_name='reviews')
     user = models.ForeignKey(User, null=False, blank=False, on_delete=models.CASCADE, related_name='reviews')
-
 
     def __str__(self):
         return f"({self.movie.title}) {self.title}"

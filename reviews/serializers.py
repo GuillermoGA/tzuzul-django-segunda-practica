@@ -6,6 +6,7 @@ from .models import Review
 
 class ReviewModelSerielizer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
+
     class Meta:
         model = Review
         fields = ["id", "title", "comment", "published_date", "stars", "movie", "user"]

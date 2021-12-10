@@ -14,7 +14,6 @@ router = routers.SimpleRouter()
 router.register(r'reviews', reviews_views.ReviewModelViewSet)
 router.register(r'movies', movies_views.MovieModelViewSet)
 
-
 urlpatterns = [
     # Admin Area
     path('admin/', admin.site.urls),
@@ -32,7 +31,6 @@ urlpatterns = [
     path('api/logout/', users_views.Logout.as_view(), name="api_logout"),
     path('api/register/', users_views.CreateUserView.as_view(), name="api_register"),
 ]
-
 
 if settings.DEBUG:
     urlpatterns += static(
