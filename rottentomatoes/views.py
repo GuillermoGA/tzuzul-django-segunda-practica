@@ -8,3 +8,6 @@ def login(request):
 
 def register(request):
     return render(request, 'register.html')
+
+def movie_details(request, id):
+    return render(request, 'movie_details.html', {"id": id})

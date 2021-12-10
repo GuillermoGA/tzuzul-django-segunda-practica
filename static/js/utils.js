@@ -57,7 +57,7 @@ function login(username, password){
     .then(result=>{
         if("token" in result){
             setCookie("token", result["token"])
-            location.replace("/")
+            location.replace(document.referrer)
         }
         else{
             alert("User or password incorrect")
@@ -66,7 +66,8 @@ function login(username, password){
 }
 
 function user_is_logged_in(){
-    if(getCookie("token") != undefined && getCookie("token") != ''){
+    token = getCookie("token")
+    if(token != undefined && token != ''){
         return true
     }
     else{
@@ -74,9 +75,25 @@ function user_is_logged_in(){
     }
 }
 
+function refresh_navbar(){
+    if(user_is_logged_in()){
+        document.getElementById("logout_link").style.display = 'block';
+        document.getElementById("login_link").style.display = 'none';
+        document.getElementById("register_link").style.display = 'none';
+    }
+    else{
+        document.getElementById("logout_link").style.display = 'none';
+        document.getElementById("login_link").style.display = 'block';
+        document.getElementById("register_link").style.display = 'block';
+    }
+}
+
 function logout(){
     deleteCookie("token")
-    location.replace("/")
+    refresh_navbar()
+    try{
+        check_user()
+    }catch(error){}
 }
 
 
@@ -85,6 +102,19 @@ function get_movies(filters){
         filters = ""
     }
     return fetch(`/api/movies/?${filters}`, {
+        headers: {
+            "Content-Type": "application/json"
+        },
+        method: "GET"
+    })
+    .then(response=>response.json())
+    .then(result=>{
+        return result
+    })
+}
+
+function get_movie(id){
+    return fetch(`/api/movies/${id}`, {
         headers: {
             "Content-Type": "application/json"
         },
@@ -113,18 +143,18 @@ function print_movie(movie){
     var h5 = document.createElement("h5")
     h5.className = "card-title"
     h5.innerText = movie.title
-    div1.appendChild(h5)
+    div2.appendChild(h5)
 
     if(movie.category != null){
         var p = document.createElement("p")
-        p.className = "card-text"
+        p.className = "card-title"
         p.innerText = movie.category.title
-        div1.appendChild(p)
+        div2.appendChild(p)
     }
 
     var a = document.createElement("a")
     a.className = "btn btn-primary"
-    a.href = "#"
+    a.href = `/movies/${movie.id}`
     a.innerText = "Details"
     div1.appendChild(a)
 

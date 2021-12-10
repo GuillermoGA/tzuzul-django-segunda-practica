@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block scripts %}
+<script src="{% static 'js/movie_details.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="col">
+    <img id="image" alt="movie image">
+    <h5 id="title">Title</h5>
+    <p>Category: <span id="category">Category</span></p>
+    <p>Synopsis: </p>
+    <p id="synopsis">Synopsis</p>
+
+    <div id="list_reviews_div" class="row">
+        <h5>Reviews</h5>
+    </div>
+    <div>
+        <h5>Create review</h5>
+        <form id="create_review_form">
+            <div class="form-group">
+                <label for="review_title">Title</label>
+                <input id="review_title" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="comment">Comment</label>
+                <input id="comment" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="stars">Stars</label>
+                <input id="stars" type="range" value="1" min="1" max="5" oninput="this.nextElementSibling.value = this.value">
+                <output>1</output>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="create_review({{id}})">Submit</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    window.onload = print_movie_details({{id}})
+    window.onload = check_user()
+</script>
+{% endblock %}
